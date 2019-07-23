@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
-import { signInWithGoogle } from '../../firebase/firebase.utils';
+import { auth, signInWithGoogle } from '../../firebase/firebase.utils';
 
 import './sign-in.styles.scss';
 
@@ -12,28 +13,34 @@ class SignIn extends Component {
 
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      isUserSignedIn: false
     };
   }
 
-  handleInputChange = (event) => {
-    const { value, name } = event.target;
+  handleInputChange = ({ target }) => {
+    const { value, name } = target;
 
     this.setState({
       [name]: value
     });
   };
 
-  handleSubmit = (event) => {
+  handleSubmit = async (event) => {
     event.preventDefault();
 
-    this.setState({
-      email: '',
-      password: ''
-    });
+    const { email, password } = this.state;
+
+    try {
+      await auth.signInWithEmailAndPassword(email, password);
+      this.setState({ email: '', password: '', isUserSignedIn: true });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   render() {
+    if (this.state.isUserSignedIn) return <Redirect to="/" />;
     return (
       <div className="sign-in">
         <h2>Already have an account?</h2>

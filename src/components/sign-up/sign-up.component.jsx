@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
@@ -14,7 +15,8 @@ class SignUp extends Component {
       displayName: '',
       email: '',
       password: '',
-      confirmPassword: ''
+      confirmPassword: '',
+      isUserSignedIn: false
     };
   }
 
@@ -44,15 +46,25 @@ class SignUp extends Component {
         displayName: '',
         email: '',
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        isUserSignedIn: true
       });
     } catch (error) {
-      console.error(error.message);
+      console.error(error);
     }
   };
 
   render() {
-    const { displayName, email, password, confirmPassword } = this.state;
+    const {
+      displayName,
+      email,
+      password,
+      confirmPassword,
+      isUserSignedIn
+    } = this.state;
+
+    if (isUserSignedIn) return <Redirect to="/" />;
+
     return (
       <div className="sign-up">
         <h2 className="title">I do not have an account</h2>
