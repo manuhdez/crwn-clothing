@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
@@ -13,8 +12,7 @@ class SignIn extends Component {
 
     this.state = {
       email: '',
-      password: '',
-      isUserSignedIn: false
+      password: ''
     };
   }
 
@@ -33,14 +31,14 @@ class SignIn extends Component {
 
     try {
       await auth.signInWithEmailAndPassword(email, password);
-      this.setState({ email: '', password: '', isUserSignedIn: true });
+      this.setState({ email: '', password: '' });
     } catch (error) {
       console.error(error);
     }
   };
 
   render() {
-    if (this.state.isUserSignedIn) return <Redirect to="/" />;
+    // if (this.props.currentUser) return <Redirect to="/" />;
     return (
       <div className="sign-in">
         <h2>Already have an account?</h2>

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
@@ -15,8 +14,7 @@ class SignUp extends Component {
       displayName: '',
       email: '',
       password: '',
-      confirmPassword: '',
-      isUserSignedIn: false
+      confirmPassword: ''
     };
   }
 
@@ -46,8 +44,7 @@ class SignUp extends Component {
         displayName: '',
         email: '',
         password: '',
-        confirmPassword: '',
-        isUserSignedIn: true
+        confirmPassword: ''
       });
     } catch (error) {
       console.error(error);
@@ -55,15 +52,7 @@ class SignUp extends Component {
   };
 
   render() {
-    const {
-      displayName,
-      email,
-      password,
-      confirmPassword,
-      isUserSignedIn
-    } = this.state;
-
-    if (isUserSignedIn) return <Redirect to="/" />;
+    const { displayName, email, password, confirmPassword } = this.state;
 
     return (
       <div className="sign-up">
