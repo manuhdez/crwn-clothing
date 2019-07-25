@@ -4,7 +4,7 @@ const initialState = {
   currentUser: null
 };
 
-export const userReducer = (state = initialState, { type, payload }) => {
+const userReducer = (state = initialState, { type, payload }) => {
   const { SET_CURRENT_USER } = userTypes;
 
   switch (type) {
@@ -17,3 +17,5 @@ export const userReducer = (state = initialState, { type, payload }) => {
       return state;
   }
 };
+
+export default userReducer;

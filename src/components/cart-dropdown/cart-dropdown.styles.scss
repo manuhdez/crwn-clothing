@@ -11,6 +11,10 @@
   right: 0;
   z-index: 5;
 
+  &.hidden {
+    display: none;
+  }
+
   .cart-items {
     height: 240px;
     display: flex;
