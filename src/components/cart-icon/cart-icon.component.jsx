@@ -13,7 +13,9 @@ const CartIcon = ({ toggleCartDropDown, cartItems }) => (
 );
 
 const mapStateToProps = ({ cart }) => ({
-  cartItems: cart.cartItems.length
+  cartItems: cart.cartItems.reduce((prev, curr) => {
+    return prev + curr.quantity;
+  })
 });
 
 const mapDispatchToProps = (dispatch) => ({
