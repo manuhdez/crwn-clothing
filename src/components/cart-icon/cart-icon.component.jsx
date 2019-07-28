@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
 import { toggleCartDropdown } from '../../redux/cart/cart.actions';
@@ -8,10 +8,6 @@ import { ReactComponent as ShoppingIcon } from '../../assets/shopping-bag.svg';
 import './cart-icon.styles.scss';
 
 const CartIcon = ({ toggleCartDropDown, cartItems }) => {
-  useEffect(() => {
-    console.log('cart icon rerender');
-  }, [cartItems]);
-
   return (
     <div className="cart-icon" onClick={toggleCartDropDown}>
       <ShoppingIcon className="shopping-icon" />
