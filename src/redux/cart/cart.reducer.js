@@ -1,5 +1,9 @@
 import { cartTypes } from '../action-types';
-import { addItemToCart } from './cart.utils';
+import {
+  addItemToCart,
+  removeItemFromCart,
+  clearItemFromCart
+} from './cart.utils';
 
 const initialState = {
   showCartDropdown: false,
@@ -7,7 +11,12 @@ const initialState = {
 };
 
 const cartReducer = (state = initialState, { type, payload }) => {
-  const { TOGGLE_CART_DROPDOWN, ADD_ITEM } = cartTypes;
+  const {
+    TOGGLE_CART_DROPDOWN,
+    ADD_ITEM,
+    REMOVE_ITEM,
+    CLEAR_CART_ITEM
+  } = cartTypes;
 
   switch (type) {
     case TOGGLE_CART_DROPDOWN:
@@ -20,6 +29,18 @@ const cartReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         cartItems: addItemToCart(state.cartItems, payload)
+      };
+
+    case REMOVE_ITEM:
+      return {
+        ...state,
+        cartItems: removeItemFromCart(state.cartItems, payload)
+      };
+
+    case CLEAR_CART_ITEM:
+      return {
+        ...state,
+        cartItems: clearItemFromCart(state.cartItems, payload)
       };
 
     default:
