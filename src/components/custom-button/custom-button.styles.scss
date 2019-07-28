@@ -26,6 +26,11 @@
     filter: invert(100%);
   }
 
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
   &.google-sign-in {
     background-color: #4285f4;
     color: #fff;
