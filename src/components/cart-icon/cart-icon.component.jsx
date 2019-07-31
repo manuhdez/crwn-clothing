@@ -4,15 +4,14 @@ import { connect } from 'react-redux';
 import { toggleCartDropdown } from '../../redux/cart/cart.actions';
 import { selectCartItemsCount } from '../../redux/cart/cart.selectors';
 
-import { ReactComponent as ShoppingIcon } from '../../assets/shopping-bag.svg';
-import './cart-icon.styles.scss';
+import { S } from './cart-icon.styles';
 
 const CartIcon = ({ toggleCartDropDown, cartItems }) => {
   return (
-    <div className="cart-icon" onClick={toggleCartDropDown}>
-      <ShoppingIcon className="shopping-icon" />
-      <span className="item-count">{cartItems}</span>
-    </div>
+    <S.CartIcon onClick={toggleCartDropDown}>
+      <S.ShoppingIcon />
+      <S.ItemCount>{cartItems}</S.ItemCount>
+    </S.CartIcon>
   );
 };
 
