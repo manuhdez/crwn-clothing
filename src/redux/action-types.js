@@ -8,3 +8,7 @@ export const cartTypes = {
   REMOVE_ITEM: 'REMOVE_ITEM',
   CLEAR_CART_ITEM: 'CLEAR_CART_ITEM'
 };
+
+export const shopTypes = {
+  UPDATE_COLLECTIONS: 'UPDATE_COLLECTIONS'
+};
