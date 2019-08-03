@@ -31,7 +31,7 @@ export const selectCollectionsErrorMessage = createSelector(
   (shop) => shop.errorMessage
 );
 
-export const selectCollectionsHasLoaded = createSelector(
+export const selectHasCollectionsLoaded = createSelector(
   [shopSelector],
-  (shop) => !!shop.collections
+  (shop) => !shop.hadCollectionsLoaded
 );

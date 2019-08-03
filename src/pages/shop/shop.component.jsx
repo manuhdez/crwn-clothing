@@ -3,24 +3,11 @@ import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { fetchCollectionsAsync } from '../../redux/shop/shop.actions';
-import {
-  selectCollectionsIsFetching,
-  selectCollectionsHasLoaded
-} from '../../redux/shop/shop.selectors';
 
-import withSpinner from '../../components/with-spinner/with-spinner.component';
-import CollectionsOverview from '../../components/collections-overview/collections-overview.component';
-import CollectionPage from '../collection/collection.component';
+import CollectionsOverviewContainer from '../../components/collections-overview/collections-overview.container';
+import CollectionPageContainer from '../collection/collection.container';
 
-const CollectionsOverviewWithSpinner = withSpinner(CollectionsOverview);
-const CollectionPageWithSpinner = withSpinner(CollectionPage);
-
-const ShopPage = ({
-  match,
-  isLoading,
-  hasCollectionsLoaded,
-  fetchCollections
-}) => {
+const ShopPage = ({ match, fetchCollections }) => {
   useEffect(() => {
     fetchCollections();
   }, [fetchCollections]);
@@ -30,33 +17,21 @@ const ShopPage = ({
       <Route
         exact
         path={`${match.path}`}
-        render={(props) => (
-          <CollectionsOverviewWithSpinner isLoading={isLoading} {...props} />
-        )}
+        component={CollectionsOverviewContainer}
       />
       <Route
         path={`${match.path}/:collectionId`}
-        render={(props) => (
-          <CollectionPageWithSpinner
-            isLoading={!hasCollectionsLoaded}
-            {...props}
-          />
-        )}
+        component={CollectionPageContainer}
       />
     </div>
   );
 };
-
-const mapStateToProps = (state) => ({
-  isLoading: selectCollectionsIsFetching(state),
-  hasCollectionsLoaded: selectCollectionsHasLoaded(state)
-});
 
 const mapDispatchToProps = (dispatch) => ({
   fetchCollections: () => dispatch(fetchCollectionsAsync())
 });
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(ShopPage);

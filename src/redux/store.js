@@ -8,9 +8,9 @@ import rootReducer from './rootReducer';
 const middlewares = [thunk];
 let composeEnhancer = compose;
 
-// if (process.env.NODE_ENV === 'development') {
-//   composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
-// }
+if (process.env.NODE_ENV === 'development') {
+  composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
+}
 
 const store = createStore(
   rootReducer,
