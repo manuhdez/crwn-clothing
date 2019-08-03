@@ -20,3 +20,18 @@ export const selectCollectionsForPreview = createSelector(
       ? Object.keys(collections).map((collection) => collections[collection])
       : []
 );
+
+export const selectCollectionsIsFetching = createSelector(
+  [shopSelector],
+  (shop) => shop.isFetching
+);
+
+export const selectCollectionsErrorMessage = createSelector(
+  [shopSelector],
+  (shop) => shop.errorMessage
+);
+
+export const selectCollectionsHasLoaded = createSelector(
+  [shopSelector],
+  (shop) => !!shop.collections
+);
