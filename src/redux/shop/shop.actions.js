@@ -10,16 +10,16 @@ export const setCollectionsLoadState = (newState) => ({
   payload: newState
 });
 
-const fetchCollectionsStart = () => ({
+export const fetchCollectionsStart = () => ({
   type: shopTypes.FETCH_COLLECTIONS_START
 });
 
-const fetchCollectionsSuccess = (collections) => ({
+export const fetchCollectionsSuccess = (collections) => ({
   type: shopTypes.FETCH_COLLECTIONS_SUCCESS,
   payload: collections
 });
 
-const fetchCollectionsFail = (error) => ({
+export const fetchCollectionsFail = (error) => ({
   type: shopTypes.FETCH_COLLECTIONS_FAIL,
   payload: error
 });
@@ -33,7 +33,7 @@ export const fetchCollectionsAsync = () => {
     try {
       const snapshot = await collectionsRef.get();
       const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
-      
+
       dispatch(fetchCollectionsSuccess(collectionsMap));
       dispatch(setCollectionsLoadState(true));
     } catch (error) {
