@@ -24,6 +24,7 @@ export const fetchCollectionsFail = (error) => ({
   payload: error
 });
 
+// This thunk middleware functions is beeing replaced by a saga function
 export const fetchCollectionsAsync = () => {
   return async (dispatch) => {
     const collectionsRef = firestore.collection('collections');
