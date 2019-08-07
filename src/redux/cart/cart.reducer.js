@@ -15,7 +15,8 @@ const cartReducer = (state = initialState, { type, payload }) => {
     TOGGLE_CART_DROPDOWN,
     ADD_ITEM,
     REMOVE_ITEM,
-    CLEAR_CART_ITEM
+    CLEAR_CART_ITEM,
+    CLEAR_CART
   } = cartTypes;
 
   switch (type) {
@@ -42,7 +43,11 @@ const cartReducer = (state = initialState, { type, payload }) => {
         ...state,
         cartItems: clearItemFromCart(state.cartItems, payload)
       };
-
+    case CLEAR_CART:
+      return {
+        ...state,
+        cartItems: []
+      };
     default:
       return state;
   }
