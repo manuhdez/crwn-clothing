@@ -16,6 +16,7 @@ S.CollectionItem = styled.div`
   align-items: center;
   position: relative;
   max-width: 250px;
+  margin-bottom: 30px;
 `;
 
 S.AddButton = styled(CustomButton)`
