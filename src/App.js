@@ -13,7 +13,7 @@ import { checkUserSession } from './redux/user/user.actions';
 
 import './App.scss';
 
-const App = ({ currentUser, checkUserSession }) => {
+export const App = ({ currentUser, checkUserSession }) => {
   useEffect(() => {
     checkUserSession();
   }, [checkUserSession]);
