@@ -7,13 +7,16 @@ import CollectionPreview from '../collection-preview/collection-preview.componen
 
 import { S } from './collections-overview.styles';
 
-const CollectionsOverview = ({ collections }) => (
-  <S.CollectionsOverview>
-    {collections.map(({ id, ...collectionProps }) => (
-      <CollectionPreview key={id} {...collectionProps} />
-    ))}
-  </S.CollectionsOverview>
-);
+const CollectionsOverview = ({ collections }) => {
+  console.log(collections);
+  return (
+    <S.CollectionsOverview>
+      {collections.map(({ id, ...collectionProps }) => (
+        <CollectionPreview key={id} {...collectionProps} />
+      ))}
+    </S.CollectionsOverview>
+  );
+};
 
 const mapStateToProps = (state) => ({
   collections: selectCollectionsForPreview(state)
