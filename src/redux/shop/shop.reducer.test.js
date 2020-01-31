@@ -13,10 +13,12 @@ describe('Shop reducer', () => {
     };
   });
 
-  test('no defined action is dispatched', () => {
-    const reducerResponse = shopReducer(initialState, {});
+  test('should return initial state if action or state not defined', () => {
+    const noActionResponse = shopReducer(initialState, {});
+    const nullStateResponse = shopReducer(undefined, {});
 
-    expect(reducerResponse).toEqual(initialState);
+    expect(noActionResponse).toEqual(initialState);
+    expect(nullStateResponse).toEqual(initialState);
   });
 
   test('on fetch_Collections_Start', () => {
