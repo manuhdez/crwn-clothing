@@ -1,24 +1,26 @@
 import { createSelector } from 'reselect';
+import { StoreState } from '../rootReducer';
+import { ShopReducerState } from './shop.reducer';
 
-const shopSelector = (state) => state.shop;
+const shopSelector = (state: StoreState): ShopReducerState => state.shop;
 
 export const selectCollections = createSelector(
   [shopSelector],
   (shop) => shop.collections
 );
 
-export const selectCollection = (collectionId) =>
-  createSelector(
-    [selectCollections],
-    (collections) => (collections ? collections[collectionId] : null)
+// TODO: add return type of collection
+export const selectCollection = (collectionId: number) =>
+  createSelector([selectCollections], (collections) =>
+    collections ? collections[collectionId] : null
   );
 
+/**
+ *
+ */
 export const selectCollectionsForPreview = createSelector(
   [selectCollections],
-  (collections) =>
-    collections
-      ? Object.keys(collections).map((collection) => collections[collection])
-      : []
+  (collections) => collections
 );
 
 export const selectCollectionsIsFetching = createSelector(

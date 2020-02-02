@@ -8,10 +8,13 @@ import CollectionPreview from '../collection-preview/collection-preview.componen
 import { S } from './collections-overview.styles';
 
 const CollectionsOverview = ({ collections }) => {
-  console.log(collections);
+  const collectionsArray = Object.keys(collections).map(
+    (collectionName) => collections[collectionName]
+  );
+
   return (
     <S.CollectionsOverview>
-      {collections.map(({ id, ...collectionProps }) => (
+      {collectionsArray.map(({ id, ...collectionProps }) => (
         <CollectionPreview key={id} {...collectionProps} />
       ))}
     </S.CollectionsOverview>

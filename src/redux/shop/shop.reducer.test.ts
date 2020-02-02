@@ -1,29 +1,24 @@
-import shopReducer from './shop.reducer';
-import { shopTypes } from '../action-types';
+import shopReducer, {
+  ShopReducerState,
+  ShopReducerAction
+} from './shop.reducer';
+import { ShopTypes } from '../action-types';
 
 describe('Shop reducer', () => {
-  let initialState = {};
+  let initialState: ShopReducerState;
 
   beforeAll(() => {
     initialState = {
-      collections: null,
+      collections: [],
       isFetching: false,
       hadCollectionsLoaded: false,
       errorMessage: ''
     };
   });
 
-  test('should return initial state if action or state not defined', () => {
-    const noActionResponse = shopReducer(initialState, {});
-    const nullStateResponse = shopReducer(undefined, {});
-
-    expect(noActionResponse).toEqual(initialState);
-    expect(nullStateResponse).toEqual(initialState);
-  });
-
   test('on fetch_Collections_Start', () => {
     const reducerResponse = shopReducer(initialState, {
-      type: shopTypes.FETCH_COLLECTIONS_START
+      type: ShopTypes.FETCH_COLLECTIONS_START
     });
 
     const expectedResponse = {
@@ -51,7 +46,7 @@ describe('Shop reducer', () => {
     ];
 
     const reducerResponse = shopReducer(initialState, {
-      type: shopTypes.FETCH_COLLECTIONS_SUCCESS,
+      type: ShopTypes.FETCH_COLLECTIONS_SUCCESS,
       payload: mockPayload
     });
 
@@ -67,7 +62,7 @@ describe('Shop reducer', () => {
     const mockError = 'Fetch Collections Failed';
 
     const reducerResponse = shopReducer(initialState, {
-      type: shopTypes.FETCH_COLLECTIONS_FAIL,
+      type: ShopTypes.FETCH_COLLECTIONS_FAIL,
       payload: mockError
     });
 

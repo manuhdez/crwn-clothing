@@ -1,6 +1,12 @@
 import { put, takeLatest, all, call } from 'redux-saga/effects';
-
-import { userTypes } from '../action-types';
+import {
+  EmailSignUpData,
+  UserRef,
+  EmailSignInData,
+  SignUpSuccessData,
+  User
+} from '../../types';
+import { UserTypes } from '../action-types';
 import {
   signInSuccess,
   signInFail,
@@ -9,6 +15,7 @@ import {
   signUpSucess,
   signUpFail
 } from './user.actions';
+import { UserReducerAction } from './user.reducer';
 
 import {
   auth,
@@ -17,14 +24,25 @@ import {
   createUserProfileDocument
 } from '../../firebase/firebase.utils';
 
-function* getSnapshotFromUserAuth(userAuth, additionalData) {
+/**
+ * Gets a user snapshot from firestore after creating a new user entry on the database
+ *
+ * @param userAuth
+ * @param additionalData
+ */
+function* getSnapshotFromUserAuth(
+  userAuth: User,
+  additionalData?: any
+): Generator<any, any, UserRef> {
   try {
     const userRef = yield call(
       createUserProfileDocument,
       userAuth,
       additionalData
     );
-    const snapShot = yield userRef.get();
+
+    // TODO: fix user snapshot type inference
+    const snapShot: any = yield userRef.get();
 
     yield put(
       signInSuccess({
@@ -37,6 +55,9 @@ function* getSnapshotFromUserAuth(userAuth, additionalData) {
   }
 }
 
+/**
+ * Signs in a user with Google authentication
+ */
 function* signInWithGoogleSaga() {
   try {
     const { user } = yield auth.signInWithPopup(googleProvider);
@@ -46,7 +67,9 @@ function* signInWithGoogleSaga() {
   }
 }
 
-function* emailSignInSaga({ payload: { email, password } }) {
+function* emailSignInSaga({
+  payload: { email, password }
+}: UserReducerAction<EmailSignInData>) {
   try {
     const { user } = yield auth.signInWithEmailAndPassword(email, password);
     yield getSnapshotFromUserAuth(user);
@@ -75,7 +98,9 @@ function* signOutUserSaga() {
   }
 }
 
-function* signUpUserSaga({ payload: { email, password, displayName } }) {
+function* signUpUserSaga({
+  payload: { email, password, displayName }
+}: UserReducerAction<EmailSignUpData>) {
   yield console.log('user signin up');
   try {
     // this creates a new user reference and returns it into the user property
@@ -86,32 +111,34 @@ function* signUpUserSaga({ payload: { email, password, displayName } }) {
   }
 }
 
-function* signInAfterSignUpSaga({ payload: { user, additionalData } }) {
+function* signInAfterSignUpSaga({
+  payload: { user, additionalData }
+}: UserReducerAction<SignUpSuccessData>) {
   yield getSnapshotFromUserAuth(user, additionalData);
 }
 
 function* onGoogleSignInStart() {
-  yield takeLatest(userTypes.GOOGLE_SIGN_IN_START, signInWithGoogleSaga);
+  yield takeLatest(UserTypes.GOOGLE_SIGN_IN_START, signInWithGoogleSaga);
 }
 
 function* onEmailSignInStart() {
-  yield takeLatest(userTypes.EMAIL_SIGN_IN_START, emailSignInSaga);
+  yield takeLatest(UserTypes.EMAIL_SIGN_IN_START, emailSignInSaga);
 }
 
 function* onCheckUserSession() {
-  yield takeLatest(userTypes.CHECK_USER_SESSION, checkUserSessionSaga);
+  yield takeLatest(UserTypes.CHECK_USER_SESSION, checkUserSessionSaga);
 }
 
 function* onUserSignOutStart() {
-  yield takeLatest(userTypes.SIGN_OUT_START, signOutUserSaga);
+  yield takeLatest(UserTypes.SIGN_OUT_START, signOutUserSaga);
 }
 
 function* onSignUpStart() {
-  yield takeLatest(userTypes.SIGN_UP_START, signUpUserSaga);
+  yield takeLatest(UserTypes.SIGN_UP_START, signUpUserSaga);
 }
 
 function* onSignUpSuccess() {
-  yield takeLatest(userTypes.SIGN_UP_SUCCESS, signInAfterSignUpSaga);
+  yield takeLatest(UserTypes.SIGN_UP_SUCCESS, signInAfterSignUpSaga);
 }
 
 export function* userSaga() {

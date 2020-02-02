@@ -1,32 +1,39 @@
-import { shopTypes } from '../action-types';
+import { Dispatch } from 'redux';
+import { ShopTypes } from '../action-types';
+import { ShopReducerAction } from './shop.reducer';
 
 import {
   firestore,
   convertCollectionsSnapshotToMap
 } from '../../firebase/firebase.utils';
 
-export const setCollectionsLoadState = (newState) => ({
-  type: shopTypes.SET_COLLECTIONS_LOAD_STATE,
+export const setCollectionsLoadState = (
+  newState: boolean
+): ShopReducerAction => ({
+  type: ShopTypes.SET_COLLECTIONS_LOAD_STATE,
   payload: newState
 });
 
-export const fetchCollectionsStart = () => ({
-  type: shopTypes.FETCH_COLLECTIONS_START
+export const fetchCollectionsStart = (): ShopReducerAction => ({
+  type: ShopTypes.FETCH_COLLECTIONS_START
 });
 
-export const fetchCollectionsSuccess = (collections) => ({
-  type: shopTypes.FETCH_COLLECTIONS_SUCCESS,
+// TODO: update collections type
+export const fetchCollectionsSuccess = (
+  collections: any[]
+): ShopReducerAction => ({
+  type: ShopTypes.FETCH_COLLECTIONS_SUCCESS,
   payload: collections
 });
 
-export const fetchCollectionsFail = (error) => ({
-  type: shopTypes.FETCH_COLLECTIONS_FAIL,
+export const fetchCollectionsFail = (error: string): ShopReducerAction => ({
+  type: ShopTypes.FETCH_COLLECTIONS_FAIL,
   payload: error
 });
 
 // This thunk middleware functions is beeing replaced by a saga function
 export const fetchCollectionsAsync = () => {
-  return async (dispatch) => {
+  return async (dispatch: Dispatch<ShopReducerAction>) => {
     const collectionsRef = firestore.collection('collections');
     dispatch(fetchCollectionsStart());
     dispatch(setCollectionsLoadState(false));
