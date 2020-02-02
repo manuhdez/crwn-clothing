@@ -1,4 +1,5 @@
 import React from 'react';
+import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 
 import {
@@ -10,8 +11,19 @@ import CheckoutItem from '../../components/checkout-item/checkout-item.component
 import StripeCheckoutButton from '../../components/stripe-button/stripe-button.component';
 
 import './checkout.styles.scss';
+import { CartItem } from '../../types';
+import { StoreState } from '../../redux/rootReducer';
 
-const CheckoutPage = ({ cartItems, totalPrice }) => (
+interface CheckoutPageProps extends CheckoutPageState, CheckoutPageActions {}
+
+interface CheckoutPageState {
+  cartItems: CartItem[];
+  totalPrice: number;
+}
+
+interface CheckoutPageActions {}
+
+const CheckoutPage = ({ cartItems, totalPrice }: CheckoutPageProps) => (
   <div className="checkout-page">
     <div className="checkout-header">
       <div className="header-block">
@@ -43,14 +55,11 @@ const CheckoutPage = ({ cartItems, totalPrice }) => (
   </div>
 );
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: StoreState): CheckoutPageState => ({
   cartItems: selectCartItems(state),
   totalPrice: selectCartItemsTotalPrice(state)
 });
 
-const mapDispatchToProps = (dispatch) => ({});
+const mapDispatchToProps = (dispatch: Dispatch): CheckoutPageActions => ({});
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CheckoutPage);
+export default connect(mapStateToProps, mapDispatchToProps)(CheckoutPage);

@@ -3,15 +3,17 @@ import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage/session';
 
 import userReducer, { UserReducerState } from './user/user.reducer';
-import cartReducer from './cart/cart.reducer';
-import directoryReducer from './directory/directory.reducer';
-import shopReducer from './shop/shop.reducer';
+import cartReducer, { CartReducerState } from './cart/cart.reducer';
+import directoryReducer, {
+  DirectoryState
+} from './directory/directory.reducer';
+import shopReducer, { ShopReducerState } from './shop/shop.reducer';
 
 export interface StoreState {
   user: UserReducerState;
-  cart: any;
-  directory: any;
-  shop: any;
+  cart: CartReducerState;
+  directory: DirectoryState;
+  shop: ShopReducerState;
 }
 
 const persistConfig = {
