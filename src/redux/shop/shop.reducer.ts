@@ -2,7 +2,9 @@ import { ShopTypes } from '../action-types';
 import { Collection } from '../../types';
 
 export interface ShopReducerState {
-  collections: Collection[];
+  collections: {
+    [name: string]: Collection;
+  };
   isFetching: boolean;
   hadCollectionsLoaded: boolean;
   errorMessage: string;
@@ -14,7 +16,7 @@ export interface ShopReducerAction {
 }
 
 const initialState: ShopReducerState = {
-  collections: [],
+  collections: {},
   isFetching: false,
   hadCollectionsLoaded: false,
   errorMessage: ''

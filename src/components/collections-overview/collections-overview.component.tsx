@@ -12,17 +12,19 @@ import { StoreState } from '../../redux/rootReducer';
 interface CollectionsOverviewProps extends CollectionsOverviewState {}
 
 interface CollectionsOverviewState {
-  collections: Collection[];
+  collections: {
+    [name: string]: Collection;
+  };
 }
 
 const CollectionsOverview = ({ collections }: CollectionsOverviewProps) => {
-  // const collectionsArray = Object.keys(collections).map(
-  //   (collectionName) => collections[collectionName]
-  // );
+  const collectionsArray = Object.keys(collections).map(
+    (collectionName) => collections[collectionName]
+  );
 
   return (
     <S.CollectionsOverview>
-      {collections.map((collection) => (
+      {collectionsArray.map((collection) => (
         <CollectionPreview key={collection.id} {...collection} />
       ))}
     </S.CollectionsOverview>
