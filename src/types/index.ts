@@ -1,3 +1,5 @@
+import { StyledComponent } from 'styled-components';
+
 /**
  * User types
  */
@@ -49,8 +51,10 @@ export interface CartItem {
  */
 
 export interface Collection {
+  id: number;
   title: string;
   items: CartItem[];
+  routeName: string;
 }
 
 /**
@@ -58,8 +62,17 @@ export interface Collection {
  */
 
 export interface Section {
+  id: number;
   title: string;
   imageUrl: string;
-  id: number;
   linkUrl: string;
+  size?: string;
+}
+
+/**
+ * Styled components
+ */
+
+export interface StyledComponentsObject {
+  [name: string]: StyledComponent<any, any>;
 }

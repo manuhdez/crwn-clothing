@@ -1,4 +1,8 @@
-import styled, { css } from 'styled-components';
+import styled, {
+  css,
+  FlattenSimpleInterpolation,
+  StyledComponent
+} from 'styled-components';
 
 const invertedButtonStyle = css`
   filter: invert(100%);
@@ -15,12 +19,22 @@ const googleButtonStyle = css`
   }
 `;
 
-const getCustomStyles = ({ isGoogleSignIn, inverted }) => {
+const getCustomStyles = ({
+  isGoogleSignIn,
+  inverted
+}: {
+  isGoogleSignIn: boolean;
+  inverted: boolean;
+}): FlattenSimpleInterpolation | undefined => {
   if (isGoogleSignIn) return googleButtonStyle;
   if (inverted) return invertedButtonStyle;
 };
 
-export const StyledCustomButton = styled.button`
+export const StyledCustomButton: StyledComponent<
+  'button',
+  any,
+  {}
+> = styled.button`
   min-width: 165px;
   width: auto;
   height: 50px;

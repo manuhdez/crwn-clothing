@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 
 import CustomButton from '../custom-button/custom-button.component';
 
-export const S = {};
+export const S: any = {};
 
 const CollectionItemTransition = css`
   transition: all ease-out 200ms;
@@ -39,7 +39,7 @@ S.CollectionImage = styled.img`
   margin-bottom: 5px;
   background-size: cover;
   background-position: center;
-  background-image: url(${(props) => props.image});
+  background-image: url(${(props: { image: string }) => props.image});
   ${CollectionItemTransition}
 
   ${S.CollectionItem}:hover & {

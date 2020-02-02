@@ -6,7 +6,7 @@ describe('<App />', () => {
   let wrapper = null;
 
   beforeAll(() => {
-    wrapper = shallow(<App />);
+    wrapper = shallow(<App currentUser={null} checkUserSession={jest.fn()} />);
   });
 
   it('renders without crashing', () => {

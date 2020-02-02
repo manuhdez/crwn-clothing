@@ -15,8 +15,22 @@ import {
   OptionsContainer,
   OptionLink
 } from './header.styles';
+import { StoreState } from '../../redux/rootReducer';
+import { Dispatch } from 'redux';
+import { User } from '../../types';
 
-const Header = ({ currentUser, showCartDropdown, signOut }) => (
+interface HeaderProps extends HeaderState, HeaderActions {}
+
+interface HeaderState {
+  currentUser: User | null;
+  showCartDropdown: boolean;
+}
+
+interface HeaderActions {
+  signOut(): void;
+}
+
+const Header = ({ currentUser, showCartDropdown, signOut }: HeaderProps) => (
   <HeaderContainer>
     <LogoContainer to="/">
       <Logo />
@@ -37,16 +51,13 @@ const Header = ({ currentUser, showCartDropdown, signOut }) => (
   </HeaderContainer>
 );
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: StoreState): HeaderState => ({
   currentUser: selectCurrentUser(state),
   showCartDropdown: selectShowCartDropdown(state)
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch: Dispatch): HeaderActions => ({
   signOut: () => dispatch(signOutStart())
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

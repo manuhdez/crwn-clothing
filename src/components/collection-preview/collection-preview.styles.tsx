@@ -1,6 +1,7 @@
 import styled from 'styled-components';
+import { StyledComponentsObject } from '../../types';
 
-export const S = {};
+export const S: StyledComponentsObject = {};
 
 S.CollectionPreview = styled.div`
   display: flex;

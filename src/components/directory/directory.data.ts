@@ -1,4 +1,6 @@
-export const sectionsData = [
+import { Section } from '../../types';
+
+export const sectionsData: Section[] = [
   {
     title: 'hats',
     imageUrl: 'https://i.ibb.co/cvpntL1/hats.png',

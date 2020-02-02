@@ -1,7 +1,7 @@
-import styled from 'styled-components';
+import styled, { StyledComponent } from 'styled-components';
 import CustomButton from '../custom-button/custom-button.component';
 
-export const S = {};
+export const S: { [name: string]: StyledComponent<any, any> } = {};
 
 S.CartDropdown = styled.div`
   position: absolute;

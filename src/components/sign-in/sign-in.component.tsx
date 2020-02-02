@@ -10,8 +10,17 @@ import {
 } from '../../redux/user/user.actions';
 
 import './sign-in.styles.scss';
+import { Dispatch } from 'redux';
+import { EmailSignInData } from '../../types';
 
-const SignIn = ({ emailSignIn, googleSignIn }) => {
+interface SignInProps extends SignInActions {}
+
+interface SignInActions {
+  googleSignIn(): void;
+  emailSignIn(userData: EmailSignInData): void;
+}
+
+const SignIn = ({ emailSignIn, googleSignIn }: SignInProps) => {
   const [userData, setUserData] = useState({
     email: '',
     password: ''
@@ -19,7 +28,9 @@ const SignIn = ({ emailSignIn, googleSignIn }) => {
 
   const { email, password } = userData;
 
-  const handleInputChange = ({ target }) => {
+  const handleInputChange = ({
+    target
+  }: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = target;
 
     setUserData({
@@ -28,7 +39,7 @@ const SignIn = ({ emailSignIn, googleSignIn }) => {
     });
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     emailSignIn({ email, password });
@@ -69,12 +80,10 @@ const SignIn = ({ emailSignIn, googleSignIn }) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch: Dispatch): SignInActions => ({
   googleSignIn: () => dispatch(googleSignInStart()),
-  emailSignIn: (userData) => dispatch(emailSignInStart(userData))
+  emailSignIn: (userData: EmailSignInData) =>
+    dispatch(emailSignInStart(userData))
 });
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(SignIn);
+export default connect(null, mapDispatchToProps)(SignIn);

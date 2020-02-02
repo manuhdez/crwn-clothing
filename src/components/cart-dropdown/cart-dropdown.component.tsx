@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { selectCartItems } from '../../redux/cart/cart.selectors';
 import { toggleCartDropdown } from '../../redux/cart/cart.actions';
@@ -8,8 +8,19 @@ import { toggleCartDropdown } from '../../redux/cart/cart.actions';
 import CartItem from '../cart-item/cart-item.component';
 
 import { S } from './cart-dropdown.styles';
+import { StoreState } from '../../redux/rootReducer';
+import { Dispatch } from 'redux';
+import { CartItem as CartItemModel } from '../../types';
 
-const CartDropdown = ({ cartItems, history, dispatch }) => {
+interface CartDropdownProps extends CartDropdownState, RouteComponentProps {
+  dispatch: Dispatch;
+}
+
+interface CartDropdownState {
+  cartItems: CartItemModel[];
+}
+
+const CartDropdown = ({ cartItems, history, dispatch }: CartDropdownProps) => {
   const handleClick = () => {
     dispatch(toggleCartDropdown());
     history.push('/checkout');
@@ -34,7 +45,7 @@ const CartDropdown = ({ cartItems, history, dispatch }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: StoreState): CartDropdownState => ({
   cartItems: selectCartItems(state)
 });
 

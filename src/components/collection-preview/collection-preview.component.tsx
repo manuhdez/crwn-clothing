@@ -1,11 +1,21 @@
 import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 
 import CollectionItem from '../collection-item/collection-item.component';
 
 import { S } from './collection-preview.styles';
+import { Collection } from '../../types';
 
-const CollectionPreview = ({ title, items, routeName, match: { path } }) => (
+interface CollectionPreviewProps extends Collection, RouteComponentProps {
+  routeName: string;
+}
+
+const CollectionPreview = ({
+  title,
+  items,
+  routeName,
+  match: { path }
+}: CollectionPreviewProps) => (
   <S.CollectionPreview>
     <S.Title as={Link} to={`${path}/${routeName}`}>
       {title.toUpperCase()}

@@ -1,9 +1,19 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import './menu-item.styles.scss';
+import { Section } from '../../types';
 
-const menuItem = ({ title, imageUrl, linkUrl, size, history, match }) => (
+interface MenuItemProps extends Section, RouteComponentProps {}
+
+const menuItem = ({
+  title,
+  imageUrl,
+  linkUrl,
+  size,
+  history,
+  match
+}: MenuItemProps) => (
   <div
     className={`${size} menu-item`}
     onClick={() => history.push(`${match.url}${linkUrl}`)}

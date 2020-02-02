@@ -7,8 +7,16 @@ import CustomButton from '../custom-button/custom-button.component';
 import { signUpStart } from '../../redux/user/user.actions';
 
 import './sign-up.styles.scss';
+import { Dispatch } from 'redux';
+import { EmailSignUpData } from '../../types';
 
-const SignUp = ({ signUp }) => {
+interface SignUpProps extends SignUpActions {}
+
+interface SignUpActions {
+  signUp(userData: EmailSignUpData): void;
+}
+
+const SignUp = ({ signUp }: SignUpProps) => {
   const [userData, setUserData] = useState({
     displayName: '',
     email: '',
@@ -18,7 +26,9 @@ const SignUp = ({ signUp }) => {
 
   const { displayName, email, password, confirmPassword } = userData;
 
-  const handleInputChange = ({ target }) => {
+  const handleInputChange = ({
+    target
+  }: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = target;
 
     setUserData({
@@ -27,7 +37,7 @@ const SignUp = ({ signUp }) => {
     });
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (password !== confirmPassword) alert(`Passwords don't match`);
@@ -45,34 +55,38 @@ const SignUp = ({ signUp }) => {
       <span>Sign up with your email</span>
       <form className="sign-up-form" onSubmit={handleSubmit}>
         <FormInput
+          id="displayName"
           type="text"
           name="displayName"
           value={displayName}
-          onChange={handleInputChange}
+          handleChange={handleInputChange}
           label="Display Name"
           required
         />
         <FormInput
+          id="email"
           type="email"
           name="email"
           value={email}
-          onChange={handleInputChange}
+          handleChange={handleInputChange}
           label="Email"
           required
         />
         <FormInput
+          id="password"
           type="password"
           name="password"
           value={password}
-          onChange={handleInputChange}
+          handleChange={handleInputChange}
           label="Password"
           required
         />
         <FormInput
+          id="confirmPassword"
           type="password"
           name="confirmPassword"
           value={confirmPassword}
-          onChange={handleInputChange}
+          handleChange={handleInputChange}
           label="Confirm Password"
           required
         />
@@ -82,11 +96,8 @@ const SignUp = ({ signUp }) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  signUp: (userData) => dispatch(signUpStart(userData))
+const mapDispatchToProps = (dispatch: Dispatch): SignUpActions => ({
+  signUp: (userData: EmailSignUpData) => dispatch(signUpStart(userData))
 });
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(SignUp);
+export default connect(null, mapDispatchToProps)(SignUp);

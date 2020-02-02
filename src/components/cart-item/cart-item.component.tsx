@@ -1,8 +1,15 @@
 import React from 'react';
 
 import { S } from './cart-item.styles';
+import { CartItem as CartItemModel } from '../../types';
 
-const CartItem = ({ item: { imageUrl, price, name, quantity } }) => (
+interface CartItemProps {
+  item: CartItemModel;
+}
+
+const CartItem = ({
+  item: { imageUrl, price, name, quantity }
+}: CartItemProps) => (
   <S.CartItem>
     <S.ItemImage src={imageUrl} alt="item" />
     <S.ItemDetails>

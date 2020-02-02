@@ -4,8 +4,18 @@ import { connect } from 'react-redux';
 import { addItem } from '../../redux/cart/cart.actions';
 
 import { S } from './collection-item.styles';
+import { CartItem } from '../../types';
+import { Dispatch } from 'redux';
 
-const CollectionItem = ({ item, addItemToCart }) => {
+export interface CollectionItemProps extends CollectionItemActions {
+  item: CartItem;
+}
+
+interface CollectionItemActions {
+  addItemToCart(item: CartItem): void;
+}
+
+const CollectionItem = ({ item, addItemToCart }: CollectionItemProps) => {
   const { name, price, imageUrl } = item;
 
   return (
@@ -22,11 +32,8 @@ const CollectionItem = ({ item, addItemToCart }) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch: Dispatch): CollectionItemActions => ({
   addItemToCart: (item) => dispatch(addItem(item))
 });
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(CollectionItem);
+export default connect(null, mapDispatchToProps)(CollectionItem);

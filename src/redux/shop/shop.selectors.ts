@@ -1,7 +1,6 @@
 import { createSelector } from 'reselect';
 import { StoreState } from '../rootReducer';
 import { ShopReducerState } from './shop.reducer';
-import { Collection } from '../../types';
 
 const shopSelector = (state: StoreState): ShopReducerState => state.shop;
 

@@ -14,11 +14,12 @@ import { checkUserSession } from './redux/user/user.actions';
 import { StoreState } from './redux/rootReducer';
 
 import './App.scss';
+import { User } from './types';
 
 interface AppProps extends AppState, AppActions {}
 
 interface AppState {
-  currentUser: any;
+  currentUser: User | null;
 }
 
 interface AppActions {
