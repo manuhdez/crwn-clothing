@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { SpinnerContainer, SpinnerOverlay } from './with-spinner.styles';
+import Spinner from '../../components/spinner/spinner.component';
 
 interface WrappedComponentProps {
   isLoading: boolean;
@@ -9,13 +9,7 @@ interface WrappedComponentProps {
 const withSpinner = (WrappedComponent: React.FC) => {
   // returns a new component
   return ({ isLoading, ...otherProps }: WrappedComponentProps) => {
-    return isLoading ? (
-      <SpinnerOverlay>
-        <SpinnerContainer />
-      </SpinnerOverlay>
-    ) : (
-      <WrappedComponent {...otherProps} />
-    );
+    return isLoading ? <Spinner /> : <WrappedComponent {...otherProps} />;
   };
 };
 
