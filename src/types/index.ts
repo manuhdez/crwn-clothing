@@ -76,3 +76,11 @@ export interface Section {
 export interface StyledComponentsObject {
   [name: string]: StyledComponent<any, any>;
 }
+
+/**
+ * Apollo client
+ */
+
+export interface ApolloClientCacheObject {
+  cartHidden: boolean;
+}
