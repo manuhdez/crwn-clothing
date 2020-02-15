@@ -1,17 +1,12 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { Collection } from '../../types';
 
 import CollectionItem from '../../components/collection-item/collection-item.component';
 
-import { selectCollection } from '../../redux/shop/shop.selectors';
 import './collection.styles.scss';
-import { Collection } from '../../types';
-import { StoreState } from '../../redux/rootReducer';
 
 // types
-interface CollectionPageProps extends CollectionPageState {}
-
-interface CollectionPageState {
+interface CollectionPageProps {
   collection: Collection | null;
 }
 
@@ -32,11 +27,4 @@ const CollectionPage = ({ collection }: CollectionPageProps) => {
   );
 };
 
-const mapStateToProps = (
-  state: StoreState,
-  ownProps: any
-): CollectionPageState => ({
-  collection: selectCollection(ownProps.match.params.collectionId)(state)
-});
-
-export default connect(mapStateToProps)(CollectionPage);
+export default CollectionPage;

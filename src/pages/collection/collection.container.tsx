@@ -1,23 +1,42 @@
-import { connect } from 'react-redux';
-import { compose } from 'redux';
+import React from 'react';
+import { Query } from 'react-apollo';
 
-import { selectHasCollectionsLoaded } from '../../redux/shop/shop.selectors';
-import withSpinner from '../../components/with-spinner/with-spinner.component';
+import Queries from '../../gql/Queries';
+import { Collection } from '../../types';
+
 import CollectionPage from './collection.component';
-import { StoreState } from '../../redux/rootReducer';
+import Spinner from '../../components/spinner/spinner.component';
+import { RouteChildrenProps } from 'react-router-dom';
 
-// types
-interface CollectionContainerState {
-  isLoading: boolean;
+interface QueryResponse {
+  getCollectionsByTitle: Collection;
 }
 
-const mapStateToProps = (state: StoreState): CollectionContainerState => ({
-  isLoading: selectHasCollectionsLoaded(state)
-});
+interface MatchParams {
+  collectionId: string;
+}
 
-const CollectionsPageContainer = compose<any>(
-  connect(mapStateToProps),
-  withSpinner
-)(CollectionPage);
+const CollectionPageContainer: React.FC<RouteChildrenProps<MatchParams>> = (
+  props
+) => {
+  const { match } = props;
 
-export default CollectionsPageContainer;
+  const queryVariables = {
+    title: match ? match.params.collectionId : null
+  };
+
+  return (
+    <Query<QueryResponse>
+      query={Queries.getCollectionByTitle}
+      variables={queryVariables}
+    >
+      {({ loading, data }) => {
+        if (loading || !data?.getCollectionsByTitle) return <Spinner />;
+
+        return <CollectionPage collection={data.getCollectionsByTitle} />;
+      }}
+    </Query>
+  );
+};
+
+export default CollectionPageContainer;
